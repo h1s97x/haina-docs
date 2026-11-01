@@ -101,6 +101,9 @@ GitHub Pages → https://h1s97x.github.io/haina-docs/
 ## 同步注意
 
 - 内容只在**本仓**编辑；`git-sync` 是单向的（本仓 → GitHub 发布仓），不要在 GitHub 侧直接改内容。
+- 应用仓发版推送配置面工件时，目标同样是**本仓（CNB 内容源）**，不直推 GitHub 发布源。
+  历史上工件直推过 GitHub，与本仓同步抢同一分支，导致同步连续失败四次才被发现；
+  现在工件走同一条单向链路，写入方只有一个。
 - 本仓与 GitHub 发布仓**改名必须成对**：CNB 侧 `.cnb.yml` 的 `target_url`、本 README 里的地址。
   GitHub 侧 workflow 不用改（base 与入口链接都由 `github.repository` 推导）。
 - 若本仓出现**重写历史**（rebase / amend / 强制推送），`git-sync` 会因非快进被拒而同步失败
