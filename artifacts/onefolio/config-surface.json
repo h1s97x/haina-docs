@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "product": "OneFolio",
-  "version": "bootstrap@25cd85d",
-  "commit": "25cd85d",
-  "generatedAt": "2026-09-24T01:24:07.851Z",
+  "version": "v0.3.5",
+  "commit": "c06e5b898012ccc08c01f1149becb19f37e9e8e2",
+  "generatedAt": "2026-10-20T10:44:48.872Z",
   "sources": [
     ".env.example",
     "docker-compose.yml"
@@ -56,12 +56,12 @@
     },
     {
       "name": "APP_PORT",
-      "required": false,
-      "source": "docker-compose.yml"
+      "required": true,
+      "source": ".env.example"
     },
     {
       "name": "APP_URL",
-      "required": false,
+      "required": true,
       "source": ".env.example"
     },
     {
@@ -70,8 +70,13 @@
       "source": ".env.example"
     },
     {
-      "name": "BOOTSTRAP_ADMIN_PASSWORD",
+      "name": "AUTH_URL",
       "required": true,
+      "source": ".env.example"
+    },
+    {
+      "name": "BOOTSTRAP_ADMIN_PASSWORD",
+      "required": false,
       "source": "docker-compose.yml"
     },
     {
@@ -96,31 +101,41 @@
     },
     {
       "name": "ONEFOLIO_IMAGE",
-      "required": false,
-      "source": "docker-compose.yml"
+      "required": true,
+      "source": ".env.example"
     },
     {
       "name": "PGRST_JWT_SECRET",
       "required": true,
-      "source": "docker-compose.yml"
+      "source": ".env.example"
     },
     {
       "name": "POSTGRES_DB",
-      "required": false,
-      "source": "docker-compose.yml"
+      "required": true,
+      "source": ".env.example"
     },
     {
       "name": "POSTGRES_PASSWORD",
       "required": true,
-      "source": "docker-compose.yml"
+      "source": ".env.example"
     },
     {
       "name": "POSTGRES_USER",
-      "required": false,
-      "source": "docker-compose.yml"
+      "required": true,
+      "source": ".env.example"
     },
     {
       "name": "SETTINGS_ENCRYPTION_KEY",
+      "required": false,
+      "source": ".env.example"
+    },
+    {
+      "name": "SETUP_TOKEN",
+      "required": false,
+      "source": ".env.example"
+    },
+    {
+      "name": "SKIP_BOOTSTRAP_ADMIN",
       "required": false,
       "source": ".env.example"
     },
