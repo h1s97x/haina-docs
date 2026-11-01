@@ -30,3 +30,8 @@ main:
             username: ${GITHUB_USERNAME}
             password: ${GITHUB_TOKEN}
             branch: main
+            # rebase 而非默认 push：默认模式是非快进即失败，而发布源上曾出现
+            # 「应用仓直推工件」这类本站没有的提交，导致同步连续失败且不易察觉
+            # （配置面工件 v0.3.1~v0.3.5 就是这样卡在 GitHub 侧、本站完全不知情）。
+            # rebase 会把本站的新提交叠到发布源之上，两边都保留；真正的冲突仍会失败。
+            sync_mode: rebase
