@@ -1,12 +1,14 @@
 # 文档站 GitHub 仓库（发布源）的 workflow
 #
-# ⚠️ 本文件当前**不生效**：GitHub 只读仓库根目录的 .github/workflows/，
-#    而本文件位于 docs-site/ 下。拆出独立文档仓后，它会自然落在该仓根目录，无需搬运。
+# 本文件位于发布仓根目录，随 main 上的 push 生效。
 #
 # 触发来源有三条：
-#   1) 内容源（CNB 文档仓）推送后经 git-sync 落到本仓 main → 重建发布
-#   2) 源码仓打 tag 时推送新的 artifacts/config-surface.json → 重建发布（版本对齐）
+#   1) 内容源（CNB 文档仓 haina-docs）推送后经 git-sync 落到本仓 main → 重建发布
+#   2) 应用仓打 tag 时推送新的 artifacts/config-surface.json → 重建发布（版本对齐）
 #   3) 手动 workflow_dispatch
+#
+# 站点地址与 base 由仓库名自动推导（${{ github.event.repository.name }}），
+# 故仓改名后无需改本文件：https://h1s97x.github.io/haina-docs/
 #
 # 发布前的最后一道闸：校验「源码仓暴露的每个配置项都在文档里」，缺一项就拒绝发布。
 # 这道闸放在这里而不是源码仓，是因为「配置项是否都有文档」只有在文档仓才检得全。

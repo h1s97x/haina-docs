@@ -1,10 +1,12 @@
 import { defineConfig } from 'vitepress';
 
 /**
- * OneFolio 部署与运维文档站
+ * 海纳（Haina）平台文档站
  *
  * 读者：部署实施 + 行内运维。内容范围刻意收窄为「怎么装、怎么配、怎么运维」，
- * 架构决策 / 审计报告 / 一次性方案属于开发者文档（仓库 docs/），不进本站。
+ * 架构决策 / 审计报告 / 一次性方案属于开发者文档（各应用仓 docs/），不进本站。
+ *
+ * 收录范围：平台下各应用的**可对外开放**文档，按应用分节；当前仅收录 OneFolio（访前一页纸）。
  *
  * 单一来源约定（重要）：
  * - 环境变量与配置项的事实源是 .env.example / docker-compose.yml / 系统设置页，
@@ -35,9 +37,9 @@ const docsEditLink = process.env.DOCS_EDIT_LINK?.trim().replace(/\/+$/, '') || '
 
 export default defineConfig({
   lang: 'zh-CN',
-  title: 'OneFolio',
-  titleTemplate: ':title · OneFolio 部署与运维',
-  description: '访前一页纸（OneFolio）私有化部署、配置与运维文档',
+  title: '海纳文档',
+  titleTemplate: ':title · 海纳文档',
+  description: '海纳平台下各应用的私有化部署、配置与运维文档（当前收录 OneFolio 访前一页纸）',
   /**
    * GitHub Pages 对无扩展名 URL 不做重写，开启 cleanUrls 会导致内页 404。
    * 故默认关闭（链接带 .html，任何静态托管都能直接用）；
@@ -131,8 +133,8 @@ export default defineConfig({
       ? { pattern: `${docsEditLink}/:path`, text: '在仓库中编辑此页' }
       : undefined,
     footer: {
-      message: '部署与运维文档 · 与代码同仓维护',
-      copyright: 'OneFolio',
+      message: '海纳平台文档 · 内容源单向同步至发布仓',
+      copyright: '海纳（Haina）',
     },
     socialLinks: docsRepoUrl ? [{ icon: 'github', link: docsRepoUrl }] : [],
   },

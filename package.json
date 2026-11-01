@@ -1,10 +1,10 @@
 {
-  "name": "onefolio-docs",
+  "name": "haina-docs",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@9.0.0",
-  "description": "OneFolio 部署与运维文档站（VitePress，独立于应用构建）",
+  "description": "海纳（Haina）平台文档站（VitePress，独立于各应用构建）",
   "scripts": {
     "dev": "vitepress dev --port 5173",
     "build": "vitepress build",

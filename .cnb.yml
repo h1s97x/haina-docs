@@ -1,11 +1,10 @@
-# 文档站 CNB 仓库（内容源）的流水线配置
+# 海纳文档站 CNB 仓库（内容源）的流水线配置
 #
-# ⚠️ 本文件在**源码仓里不生效**：CNB 只读仓库根目录的 .cnb.yml，而本文件在 docs-site/ 下。
-#    它属于文档仓 —— 推送文档站时会被放到该仓根目录并重命名为 .cnb.yml（见 docs-site/README.md）。
+# 本仓即内容源，`.cnb.yml` 位于仓库根目录、随 push 生效。
 #
 # 内容源与发布源分离是本方案的核心：
 #
-#   CNB 文档仓（本文件，内容源，私有）
+#   CNB 文档仓 haina-docs（本文件，内容源，私有）
 #        │  提交即单向同步
 #        ▼
 #   GitHub 文档仓（发布源，公开）
@@ -26,7 +25,7 @@ main:
           image: tencentcom/git-sync
           settings:
             # 发布源仓库（GitHub 上的文档仓，需已开启 Pages）
-            target_url: https://github.com/h1s97x/onefolio-docs.git
+            target_url: https://github.com/h1s97x/haina-docs.git
             auth_type: https
             username: ${GITHUB_USERNAME}
             password: ${GITHUB_TOKEN}

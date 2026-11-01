@@ -1,12 +1,14 @@
-# OneFolio 文档站
+# 海纳文档站
 
-VitePress 部署与运维文档站，读者是**部署实施与行内运维**。本仓已从源码仓独立出来，是站点内容的**唯一来源**。
-（本仓内容会同步到公开的 GitHub 发布仓，**不要写入任何内部地址**：源码仓路径、
+VitePress 平台文档站，读者是**部署实施与行内运维**。本仓承载海纳平台下各应用**可对外开放**的
+「装、配、运维」文档，按应用分节；当前仅收录 OneFolio（访前一页纸）。
+本仓是站点内容的**唯一来源**。
+（本仓内容会同步到公开的 GitHub 发布仓，**不要写入任何内部地址**：应用仓路径、
 制品库域名、项目/客户代号、内网地址。）
 
-- 源码仓只保留 `docs/`（开发者文档：架构决策、审计报告等），不在本仓；
+- 各应用仓只保留 `docs/`（开发者文档：架构决策、审计报告等），不在本仓；
 - 本仓**不硬编码任何内部地址**（仓库路径、制品库域名、项目代号一律用占位符）——
-  源码仓私有、本站公网可见，两者边界不同；
+  应用仓私有、本站公网可见，两者边界不同；
 - 内容只放「装、配、运维」，每条结论都对应可执行命令或界面位置。
 
 ## 本地预览
@@ -38,21 +40,21 @@ pnpm check:config:surface
 ## 关联链路
 
 ```text
-源码仓（私有，不在本仓文档中给出地址）
+应用仓（私有，不在本仓文档中给出地址）
   │  打 tag：导出 config-surface.json → 推送到本仓 artifacts/
   ▼
-本仓 · 内容源（私有，CNB）
+本仓 haina-docs · 内容源（私有，CNB）
   │  push → git-sync 单向同步
   ▼
-发布源（github.com/h1s97x/onefolio-docs，公开）
+发布源（github.com/h1s97x/haina-docs，公开）
   │  Actions：校验配置项覆盖 → 构建 → 发布
   ▼
-GitHub Pages → https://h1s97x.github.io/onefolio-docs/
+GitHub Pages → https://h1s97x.github.io/haina-docs/
 ```
 
 | 角色           | 负责                                     | 不负责                 |
 | -------------- | ---------------------------------------- | ---------------------- |
-| 源码仓         | 导出并推送配置面工件（版本对齐的事实源） | 不构建、不发布站点     |
+| 应用仓         | 导出并推送配置面工件（版本对齐的事实源） | 不构建、不发布站点     |
 | 本仓（内容源） | 唯一内容编辑入口，提交即同步             | 不做发布前校验         |
 | GitHub 发布仓  | 校验配置项覆盖 + 构建 + 发布 Pages       | 不编辑内容（只被消费） |
 
@@ -63,7 +65,7 @@ GitHub Pages → https://h1s97x.github.io/onefolio-docs/
 
 | 项         | 说明                                                                                                                                                                                                        |
 | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 站点地址   | `https://h1s97x.github.io/onefolio-docs/`（项目站点，位于 `/<repo>/` 子路径，workflow 自动传 `--base`）                                                                                                     |
+| 站点地址   | `https://h1s97x.github.io/haina-docs/`（项目站点，位于 `/<repo>/` 子路径，workflow 用 `github.event.repository.name` 自动传 `--base`，仓改名无需改 workflow）                                                 |
 | 入口链接   | `DOCS_REPO_URL`（仓库入口）、`DOCS_EDIT_LINK`（「编辑此页」前缀）由 workflow 注入。两个平台路径格式不同（GitHub `/blob/main`、CNB `/-/blob/main`），所以前缀由环境给出、不在配置里猜平台                    |
 | 自定义域名 | 绑定后把 workflow 的 `--base=/.../` 改成 `--base=/`，并在仓内加 `CNAME`                                                                                                                                     |
 | cleanUrls  | **默认关闭**：GitHub Pages 不做无扩展名 URL 重写，开启会导致内页 404，因此链接统一带 `.html`。迁到 nginx / Netlify 等支持重写的平台时可设 `CLEAN_URLS=1`（nginx 需 `try_files $uri $uri.html $uri/ =404;`） |
@@ -73,6 +75,8 @@ GitHub Pages → https://h1s97x.github.io/onefolio-docs/
 ## 同步注意
 
 - 内容只在**本仓**编辑；`git-sync` 是单向的（本仓 → GitHub 发布仓），不要在 GitHub 侧直接改内容。
+- 本仓与 GitHub 发布仓**改名必须成对**：CNB 侧 `.cnb.yml` 的 `target_url`、本 README 里的地址。
+  GitHub 侧 workflow 不用改（base 与入口链接都由 `github.repository` 推导）。
 - 若本仓出现**重写历史**（rebase / amend / 强制推送），`git-sync` 会因非快进被拒而同步失败
   （GitHub 侧仍是旧提交）。此时需在 GitHub 侧做一次强制更新或重建仓库，之后恢复正常。
 

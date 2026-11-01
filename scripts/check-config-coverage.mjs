@@ -7,14 +7,14 @@
  *
  * 两种模式：
  *
- *   1) 同仓模式（默认，源码仓 CI 用）
- *      node docs-site/scripts/check-config-coverage.mjs
- *      直接从 .env.example + docker-compose.yml 派生配置面。
+ *   1) 工件模式（默认用法，文档仓 / 发布仓 CI 用）
+ *      node scripts/check-config-coverage.mjs --surface artifacts/config-surface.json
+ *      读取应用仓发布的 config-surface.json（见应用仓 scripts/export-config-surface.mjs）。
+ *      单向依赖：文档仓只消费清单，不需要拿到应用仓权限。
  *
- *   2) 工件模式（文档站独立成仓后用）
- *      node scripts/check-config-coverage.mjs --surface config-surface.json
- *      读取源码仓发布的 config-surface.json（见源码仓 scripts/export-config-surface.mjs）。
- *      单向依赖：文档仓只消费清单，不需要拿到源码仓权限。
+ *   2) 同仓模式（仅当本脚本被复制进应用仓、且同级有 .env.example 与 docker-compose.yml 时可用）
+ *      node scripts/check-config-coverage.mjs
+ *      直接从 .env.example + docker-compose.yml 派生配置面。
  *
  * 可选参数：--doc <path> 指定配置参考页（默认 guide/configuration.md）
  */
@@ -25,9 +25,9 @@ import path from 'node:path';
 import { buildConfigSurface } from './config-surface.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
-/** docs-site/scripts → docs-site */
+/** scripts → 文档仓根 */
 const docsRoot = path.resolve(scriptDir, '..');
-/** docs-site/scripts → 仓根（独立成仓后这里是文档仓根，不会有 .env.example） */
+/** scripts → 文档仓根的上一级（仅同仓模式用；独立成仓后此处没有 .env.example） */
 const repoRoot = path.resolve(scriptDir, '..', '..');
 
 function readArg(flag) {
