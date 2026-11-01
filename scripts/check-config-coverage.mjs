@@ -35,7 +35,7 @@ function readArg(flag) {
   return index !== -1 ? process.argv[index + 1] : undefined;
 }
 
-const docPath = path.resolve(docsRoot, readArg('--doc') ?? 'guide/configuration.md');
+const docPath = path.resolve(docsRoot, readArg('--doc') ?? 'onefolio/guide/configuration.md');
 const surfacePath = readArg('--surface');
 
 let doc;

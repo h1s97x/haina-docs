@@ -8,6 +8,13 @@ import { defineConfig } from 'vitepress';
  *
  * 收录范围：平台下各应用的**可对外开放**文档，按应用分节；当前仅收录 OneFolio（访前一页纸）。
  *
+ * 目录约定（单次构建、按路径分区，不拆多站）：
+ *   <应用名>/            一个应用的全部页面，URL 前缀即该目录名，如 /onefolio/guide/quick-start
+ *   artifacts/<应用名>/  该应用发版时推送的配置面工件（校验配置项覆盖用）
+ *   根 index.md          平台首页（应用索引），不属于任何应用
+ *
+ * 新增应用 = 加一个目录 + nav 平铺一行 + sidebar 加一段，构建与发布链路不用动。
+ *
  * 单一来源约定（重要）：
  * - 环境变量与配置项的事实源是 .env.example / docker-compose.yml / 系统设置页，
  *   本站只做汇总与解释；`pnpm check:docs` 会校验 .env.example 与 compose 里出现的
@@ -61,39 +68,41 @@ export default defineConfig({
   // sitemap: { hostname: 'https://<正式域名>' },
   themeConfig: {
     nav: [
-      { text: '部署指南', link: '/guide/quick-start', activeMatch: '/guide/quick' },
-      { text: '配置参考', link: '/guide/configuration', activeMatch: '/guide/config' },
-      { text: '运维手册', link: '/guide/operations', activeMatch: '/guide/operations' },
-      { text: 'API 参考', link: '/api/', activeMatch: '/api/' },
-      { text: '常见问题', link: '/guide/troubleshooting', activeMatch: '/guide/trouble' },
+      // 应用切换器：新增应用时在此平铺一行（应用少时下拉反而多一次点击），
+      // 并在下方 sidebar 增加同名路径段。导航不随应用增多而变深。
+      { text: 'OneFolio', link: '/onefolio/', activeMatch: '^/onefolio/' },
     ],
 
-    sidebar: [
-      {
-        text: '开始部署',
-        collapsed: false,
-        items: [
-          { text: '交付形态与部署步骤', link: '/guide/quick-start' },
-          { text: '环境变量与系统设置', link: '/guide/configuration' },
-          { text: '部署边界与容量', link: '/guide/architecture' },
-        ],
-      },
-      {
-        text: '日常运维',
-        collapsed: false,
-        items: [
-          { text: '运维总览', link: '/guide/operations' },
-          { text: '备份与恢复', link: '/guide/backup' },
-          { text: '升级与回滚', link: '/guide/upgrade' },
-          { text: '故障排查', link: '/guide/troubleshooting' },
-        ],
-      },
-      {
-        text: '参考',
-        collapsed: false,
-        items: [{ text: 'API 参考', link: '/api/' }],
-      },
-    ],
+    // 每个应用的目录树只在自己的路径前缀下生效，应用之间互不干扰。
+    // 用对象形式（而非单个数组）是按路径分派的前提。
+    sidebar: {
+      '/onefolio/': [
+        {
+          text: '开始部署',
+          collapsed: false,
+          items: [
+            { text: '交付形态与部署步骤', link: '/onefolio/guide/quick-start' },
+            { text: '环境变量与系统设置', link: '/onefolio/guide/configuration' },
+            { text: '部署边界与容量', link: '/onefolio/guide/architecture' },
+          ],
+        },
+        {
+          text: '日常运维',
+          collapsed: false,
+          items: [
+            { text: '运维总览', link: '/onefolio/guide/operations' },
+            { text: '备份与恢复', link: '/onefolio/guide/backup' },
+            { text: '升级与回滚', link: '/onefolio/guide/upgrade' },
+            { text: '故障排查', link: '/onefolio/guide/troubleshooting' },
+          ],
+        },
+        {
+          text: '参考',
+          collapsed: false,
+          items: [{ text: 'API 参考', link: '/onefolio/api/' }],
+        },
+      ],
+    },
 
     // 搜索：本地索引（构建期生成，不依赖任何外部服务，离线/内网同样可用）
     search: {

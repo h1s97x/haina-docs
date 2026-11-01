@@ -50,12 +50,12 @@ jobs:
       - name: 校验配置项覆盖
         run: |
           set -e
-          if [ ! -f artifacts/config-surface.json ]; then
-            echo "缺少 artifacts/config-surface.json。" >&2
-            echo "它由源码仓打 tag 时推送（见源码仓 .cnb.yml 的 push config surface to docs repo 阶段）。" >&2
+          if [ ! -f artifacts/onefolio/config-surface.json ]; then
+            echo "缺少 artifacts/onefolio/config-surface.json。" >&2
+            echo "它由应用仓打 tag 时推送（见应用仓 .cnb.yml 的 push config surface to docs repo 阶段）。" >&2
             exit 1
           fi
-          node scripts/check-config-coverage.mjs --surface artifacts/config-surface.json
+          node scripts/check-config-coverage.mjs --surface artifacts/onefolio/config-surface.json
 
       - name: 构建
         env:
